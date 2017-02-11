@@ -29,6 +29,5 @@ library
     , lifted-base
     , monad-control
   exposed-modules:
-      Main
       WriteBuffer.Persistent
   default-language: Haskell2010

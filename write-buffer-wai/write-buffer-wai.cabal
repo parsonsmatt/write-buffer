@@ -26,6 +26,5 @@ library
     , aeson
     , bytestring
   exposed-modules:
-      Main
       WriteBuffer.Wai
   default-language: Haskell2010

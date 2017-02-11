@@ -30,7 +30,7 @@ makeBufferOpts :: MonadIO m => TBQueue rec -> ([rec] -> m ()) -> WriteBufferOpts
 makeBufferOpts bufferInputQueue saveRecords = WriteBufferOpts {..}
   where
     maxBufferSize = 1000
-    maxTimeToWait = 2 * 10^9
+    maxTimeToWait = 5 * 10^9
     onError = liftIO . print
 
 runWriteBuffer :: (MonadCatch m, MonadBaseControl IO m, MonadIO m) => WriteBufferOpts rec m -> m ThreadId

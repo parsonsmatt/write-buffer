@@ -35,6 +35,5 @@ library
     , lifted-base
     , monad-control
   exposed-modules:
-      Main
       WriteBuffer
   default-language: Haskell2010

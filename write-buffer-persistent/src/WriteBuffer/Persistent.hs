@@ -29,7 +29,6 @@ persistToDatabase
     -> (forall a. ReaderT backend m a -> m a)
     -> WriteBufferOpts rec m
 persistToDatabase q k = makeBufferOpts q $ \xs -> do
-    liftIO (print xs)
     e <- try $ k $ insertMany_ xs
     liftIO $ case e of
         Left (err :: SomeException) -> do

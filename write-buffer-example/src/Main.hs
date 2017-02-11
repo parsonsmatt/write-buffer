@@ -18,10 +18,10 @@ import           Models
 
 main :: IO ()
 main = do
-    (q, app) <- writeBufferApplication 1000
-    runStdoutLoggingT $ withMySQLConn connectInfo $ \pool -> do
+    (q, app) <- writeBufferApplication 10000
+    runStdoutLoggingT $ withMySQLPool connectInfo 8 $ \pool -> do
         liftIO $ putStrLn "Starting the write buffer"
-        runWriteBuffer $ persistToDatabase @TimeSeries q (flip runSqlConn pool)
+        runWriteBuffer $ persistToDatabase @TimeSeries q (flip runSqlPool pool)
         liftIO $ do
             putStrLn "Starting web app"
             run 8012 app
