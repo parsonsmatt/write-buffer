@@ -1,0 +1,28 @@
+name:                write-buffer-core
+version:             0.1.0.0
+synopsis:            Buffer your writes, transparently
+description:         Core for the write-buffer set of libraries
+homepage:            https://github.com/parsonsmatt/write-buffer#readme
+license:             BSD3
+author:              Author name here
+maintainer:          example@example.com
+copyright:           2017 Author name here
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - mtl
+  - exceptions
+  - stm
+  - stm-chans
+  - bytestring
+  - clock
+  - dlist
+  - lifted-async
+  - lifted-base
+  - monad-control
+
+library:
+    source-dirs: src

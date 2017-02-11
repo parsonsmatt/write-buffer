@@ -1,0 +1,32 @@
+name:                write-buffer-example
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/githubuser/write-buffer-example#readme
+license:             BSD3
+author:              Author name here
+maintainer:          example@example.com
+copyright:           2017 Author name here
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - write-buffer-core
+  - monad-logger
+  - write-buffer-wai
+  - time
+  - stm
+  - write-buffer-persistent
+  - persistent
+  - aeson
+  - persistent-template
+  - persistent-mysql
+  - warp
+  - mtl
+
+executables:
+  write-buffer-example:
+    source-dirs:      src
+    main:             Main.hs
