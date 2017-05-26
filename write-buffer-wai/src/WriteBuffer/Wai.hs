@@ -25,9 +25,7 @@ writeBufferApplication qSize= do
                     BS.hPutStr stderr $ "Failed to parse " <> body
                     respond $ responseLBS H.status400 [] ""
                 Just rec -> do
-                    atomically $ (writeTBQueue queue $! rec)
+                    atomically (writeTBQueue queue $! rec)
                     respond $ responseLBS H.status201 [] ""
-        | otherwise = do
+        | otherwise =
             respond $ responseLBS H.status405 [] ""
-
-

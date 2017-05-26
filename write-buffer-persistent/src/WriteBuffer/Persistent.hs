@@ -2,7 +2,6 @@
 {-# LANGUAGE GADTs                 #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 
 module WriteBuffer.Persistent where
@@ -31,6 +30,7 @@ persistToDatabase
 persistToDatabase q k = makeBufferOpts q $ \xs -> do
     e <- try $ k $ insertMany_ xs
     liftIO $ case e of
-        Left (err :: SomeException) -> do
+        Left (err :: SomeException) ->
             print err
-        Right _ -> pure ()
+        Right _ ->
+            pure ()
