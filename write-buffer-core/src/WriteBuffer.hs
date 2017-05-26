@@ -2,14 +2,18 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE RecordWildCards       #-}
 
-module WriteBuffer where
+module WriteBuffer
+    ( module WriteBuffer
+    , module X
+    ) where
 
 import           Control.Concurrent.Lifted
-import           Control.Concurrent.STM
+import           Control.Concurrent.STM          as X
+import           Control.Concurrent.STM.TBMQueue as X
 import           Control.Monad.Catch
 import           Control.Monad.Reader
 import           Control.Monad.Trans.Control
-import           Data.ByteString             (ByteString)
+import           Data.ByteString                 (ByteString)
 import           Data.DList
 import           Data.Int
 import           Data.IORef.Lifted
@@ -19,14 +23,14 @@ import           System.Timeout
 
 data WriteBufferOpts rec m
     = WriteBufferOpts
-    { saveRecords      :: [rec] -> m ()
-    , onError          :: SomeException -> m ()
-    , maxBufferSize    :: Int
+    { maxBufferSize    :: Int
     , maxTimeToWait    :: Integer
-    , bufferInputQueue :: TBQueue rec
+    , bufferInputQueue :: TBMQueue rec
+    , onError          :: SomeException -> m ()
+    , saveRecords      :: [rec] -> m ()
     }
 
-makeBufferOpts :: MonadIO m => TBQueue rec -> ([rec] -> m ()) -> WriteBufferOpts rec m
+makeBufferOpts :: MonadIO m => TBMQueue rec -> ([rec] -> m ()) -> WriteBufferOpts rec m
 makeBufferOpts bufferInputQueue saveRecords = WriteBufferOpts {..}
   where
     maxBufferSize = 1000
@@ -46,11 +50,21 @@ runWriteBuffer WriteBufferOpts{..} = fork $ do
             earlier <- liftIO $ readIORef timeRef
             now <- liftIO $ getTime Monotonic
             let diff = diffTimeSpec now earlier
-            if toNanoSecs diff >= maxTimeToWait
-                then do
-                    liftIO $ writeIORef timeRef now
-                    saveRecords (toList inputs) `catch` onError
-                    loop empty 0 timeRef
-                else do
-                    minput <- liftIO $ timeout (fromIntegral maxTimeToWait `div` 1000) $ atomically $ readTBQueue bufferInputQueue
-                    loop (maybe id (flip snoc) minput inputs) (len + 1) timeRef
+            if toNanoSecs diff >= maxTimeToWait then do
+                liftIO $ writeIORef timeRef now
+                saveRecords (toList inputs) `catch` onError
+                loop empty 0 timeRef
+            else do
+                mminput <- liftIO
+                    $ timeout (fromIntegral maxTimeToWait `div` 1000)
+                    $ atomically
+                    $ readTBMQueue bufferInputQueue
+                case mminput of
+                    Nothing ->  -- timeout
+                        loop inputs len timeRef
+                    Just minput ->
+                        case minput of
+                            Nothing -> -- closed queue
+                                pure ()
+                            Just input ->
+                                loop (inputs `snoc` input) (len + 1) timeRef

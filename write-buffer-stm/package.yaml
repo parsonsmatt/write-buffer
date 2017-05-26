@@ -1,0 +1,21 @@
+name:                write-buffer-stm
+version:             0.1.0.0
+synopsis:            A write buffer for STM channels and queues.
+description:         See README.md
+homepage:            https://github.com/parsonsmatt/write-buffer#readme
+license:             BSD3
+author:              Matt Parsons
+maintainer:          parsonsmatt@gmail.com
+copyright:           2017 Matt Parsons
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - write-buffer-core
+  - stm
+  - stm-chans
+
+library:
+  source-dirs:      src

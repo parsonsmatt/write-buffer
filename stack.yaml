@@ -40,6 +40,7 @@ packages:
 - write-buffer-wai
 - write-buffer-persistent
 - write-buffer-example
+- write-buffer-stm
 
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)

@@ -2,15 +2,15 @@
 --
 -- see: https://github.com/sol/hpack
 
-name:           write-buffer-core
+name:           write-buffer-stm
 version:        0.1.0.0
-synopsis:       Buffer your writes, transparently
-description:    Core for the write-buffer set of libraries
+synopsis:       A write buffer for STM channels and queues.
+description:    See README.md
 category:       Web
 homepage:       https://github.com/parsonsmatt/write-buffer#readme
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2017 Author name here
+author:         Matt Parsons
+maintainer:     parsonsmatt@gmail.com
+copyright:      2017 Matt Parsons
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -24,16 +24,10 @@ library
       src
   build-depends:
       base >= 4.7 && < 5
-    , mtl
-    , exceptions
+    , write-buffer-core
     , stm
     , stm-chans
-    , bytestring
-    , clock
-    , dlist
-    , lifted-async
-    , lifted-base
-    , monad-control
   exposed-modules:
-      WriteBuffer
+      Main
+      WriteBuffer.STM.TBMQueue
   default-language: Haskell2010

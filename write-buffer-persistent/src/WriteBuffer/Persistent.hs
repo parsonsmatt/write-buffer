@@ -8,7 +8,6 @@ module WriteBuffer.Persistent where
 
 import           WriteBuffer
 
-import           Control.Concurrent.STM
 import           Control.Exception.Lifted
 import           Control.Monad.Reader
 import           Control.Monad.Trans.Control
@@ -24,7 +23,7 @@ persistToDatabase
     , MonadBaseControl IO m
     , Show rec
     )
-    => TBQueue rec
+    => TBMQueue rec
     -> (forall a. ReaderT backend m a -> m a)
     -> WriteBufferOpts rec m
 persistToDatabase q k = makeBufferOpts q $ \xs -> do
