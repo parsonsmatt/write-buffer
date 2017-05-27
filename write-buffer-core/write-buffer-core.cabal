@@ -8,9 +8,9 @@ synopsis:       Buffer your writes, transparently
 description:    Core for the write-buffer set of libraries
 category:       Web
 homepage:       https://github.com/parsonsmatt/write-buffer#readme
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2017 Author name here
+author:         Matt Parsons
+maintainer:     parsonsmatt@gmail.com
+copyright:      2017 Matt Parsons
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
