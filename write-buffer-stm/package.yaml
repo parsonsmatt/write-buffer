@@ -1,5 +1,5 @@
 name:                write-buffer-stm
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            A write buffer for STM channels and queues.
 description:         See README.md
 homepage:            https://github.com/parsonsmatt/write-buffer#readme
@@ -10,6 +10,7 @@ copyright:           2017 Matt Parsons
 category:            Web
 extra-source-files:
 - README.md
+- CHANGELOG.md
 
 dependencies:
   - base >= 4.7 && < 5
